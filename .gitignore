@@ -1,0 +1,11 @@
+Library/
+Logs/
+UserSettings/
+Build/
+Packages/
+Assets/ParrelSync/
+*.csproj*
+*.sln
+settings.json
+.NETFramework*
+Temp/
