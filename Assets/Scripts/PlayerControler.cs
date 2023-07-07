@@ -6,8 +6,10 @@ using System;
 
 public class PlayerControler : NetworkBehaviour
 {
-    public float Speed;
-    public float Acceleration;
+    [SerializeField]
+    private float Speed;
+    [SerializeField]
+    private float Acceleration;
 
     private float[] ForcePull;
  
@@ -20,7 +22,8 @@ public class PlayerControler : NetworkBehaviour
     }
     private Rigidbody2D Rig;
     private NetworkVariable<Vector2> Position = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Server);
-    private NetworkVariable<Vector2> Velocity = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Vector2> Velocity = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Server);
+    private NetworkVariable<Vector2> Control = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -35,10 +38,12 @@ public class PlayerControler : NetworkBehaviour
     void FixedUpdate()
     {   
         if (IsOwner) {
-            Move();
+            Vector2 control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Control.Value = control;
+            Move(control);
         }
         if (IsServer) {
-            Rig.velocity = Velocity.Value;
+            Move(Control.Value);
             Position.Value = transform.position;
         }
         else {
@@ -46,14 +51,15 @@ public class PlayerControler : NetworkBehaviour
         }
         
     }
-    private void Move() {
+    private void Move(Vector2 control) {
         Vector2 current_velocity = Rig.velocity;
         Vector2 new_velocity = Rig.velocity;
-        Vector2 control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         new_velocity.x = speedCheck(current_velocity.x, control.x, new_velocity.x, 0);
         new_velocity.y = speedCheck(current_velocity.y, control.y, new_velocity.y, 1);
         Rig.velocity = new_velocity;
-        Velocity.Value = new_velocity;
+        if (IsServer) {
+            Velocity.Value = new_velocity;
+        }
     }
 
     float speedCheck(float current_velocity, float control, float new_velocity, int axis) {

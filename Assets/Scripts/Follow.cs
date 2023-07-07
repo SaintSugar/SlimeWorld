@@ -4,14 +4,21 @@ using System;
 
 public class Follow : MonoBehaviour {
 
-    public Transform Target;
-    public float Radius;
-    public float Elasticity;
-    public bool InfititeElasticity;
+    [SerializeField]
+    private Transform Target;
+    [SerializeField]
+    private float Radius;
+    [SerializeField]
+    private float Elasticity;
+    [SerializeField]
+    private bool InfititeElasticity;
     
 
-    // Update is called once per frame
+    public void SetTarget(Transform t) {
+        Target = t;
+    }
     void LateUpdate () {
+        if (!Target) return;
         float xp, yp, xc, yc;
         xp = Target.transform.position.x;
         yp = Target.transform.position.y;
