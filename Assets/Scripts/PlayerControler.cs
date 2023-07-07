@@ -19,33 +19,41 @@ public class PlayerControler : NetworkBehaviour
         Rig = GetComponent<Rigidbody2D>();
     }
     private Rigidbody2D Rig;
-    private NetworkVariable<Vector2> networkControl = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Vector2> Position = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Server);
+    private NetworkVariable<Vector2> Velocity = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner);
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        networkControl.OnValueChanged += (Vector2 a, Vector2 b) =>
-        {
-            Debug.Log(message:$"{OwnerClientId}: control: {networkControl.Value}");
-
-            
+        Position.OnValueChanged += (Vector2 a, Vector2 b) =>
+        {    
+            if ((new Vector2(transform.position.x, transform.position.y) - Position.Value).magnitude > 3) {
+                transform.position = Position.Value;
+            }
         };
     }
-    void Update()
+
+    void FixedUpdate()
     {   
         if (IsOwner) {
-            networkControl.Value = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            MoveServerRpc();
+            Move();
+        }
+        if (IsServer) {
+            Rig.velocity = Velocity.Value;
+            Position.Value = transform.position;
+        }
+        else {
+            Rig.velocity = Velocity.Value;
         }
         
     }
-    [ServerRpc]
-    private void MoveServerRpc() {
+    private void Move() {
         Vector2 current_velocity = Rig.velocity;
         Vector2 new_velocity = Rig.velocity;
-        Vector2 control = networkControl.Value;
+        Vector2 control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         new_velocity.x = speedCheck(current_velocity.x, control.x, new_velocity.x, 0);
         new_velocity.y = speedCheck(current_velocity.y, control.y, new_velocity.y, 1);
         Rig.velocity = new_velocity;
+        Velocity.Value = new_velocity;
     }
 
     float speedCheck(float current_velocity, float control, float new_velocity, int axis) {
