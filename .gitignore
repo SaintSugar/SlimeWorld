@@ -3,7 +3,7 @@ Logs/
 UserSettings/
 Build/
 Packages/
-Assets/ParrelSync/
+*ParrelSync*
 *.csproj*
 *.sln
 settings.json

@@ -12,7 +12,7 @@ public class MainPlayerSettings : NetworkBehaviour
     void Start()
     {
         if (IsOwner){
-            GetComponent<SpriteRenderer>().sortingLayerName = "MainPlayer";
+            //GetComponent<SpriteRenderer>().sortingLayerName = "MainPlayer";
             camera.GetComponent<Follow>().SetTarget(transform);
             Instantiate(camera);
             
