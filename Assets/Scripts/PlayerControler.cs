@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerControler : NetworkBehaviour
     private float Acceleration;
 
     private float[] ForcePull;
+    private bool jumpedAlready = false;
  
     void Start()
     {   
@@ -21,33 +23,57 @@ public class PlayerControler : NetworkBehaviour
         Rig = GetComponent<Rigidbody2D>();
     }
     private Rigidbody2D Rig;
-    private NetworkVariable<Vector2> Position = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Server);
-    private NetworkVariable<Vector2> Velocity = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Server);
+    private NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>(writePerm:NetworkVariableWritePermission.Server);
+    private NetworkVariable<Vector3> Velocity = new NetworkVariable<Vector3>(writePerm:NetworkVariableWritePermission.Server);
     private NetworkVariable<Vector2> Control = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
+    private NetworkVariable<bool> isJumping = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Server, readPerm:NetworkVariableReadPermission.Everyone);
+    private NetworkVariable<bool> jumpControl = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        Position.OnValueChanged += (Vector2 a, Vector2 b) =>
+        Position.OnValueChanged += (Vector3 a, Vector3 b) =>
         {    
-            if ((new Vector2(transform.position.x, transform.position.y) - Position.Value).magnitude > 3) {
+            if ((transform.position - Position.Value).magnitude > 3) {
                 transform.position = Position.Value;
             }
+        };
+        isJumping.OnValueChanged += (bool a, bool b) =>
+        {    
+            
         };
     }
 
     void FixedUpdate()
     {   
+        if (!(jumpTimer > 0)) {
+                float zLevel = GetComponent<PlayerCollider>().GetZLevel();
+                transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
+                if (Math.Round(transform.position.z)%2 == 0)
+                    gameObject.layer = LayerMask.NameToLayer("PlayerCollision0");
+                else
+                    gameObject.layer = LayerMask.NameToLayer("PlayerCollision1");
+            }
         if (IsOwner) {
             Vector2 control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             Control.Value = control;
             Move(control);
+            if (Input.GetAxis("Jump")!=0)
+                jumpControl.Value = true;
+            else jumpControl.Value = false;
         }
         if (IsServer) {
-            Move(Control.Value);
+            if (MathF.Abs(Control.Value.x) <= 1 && MathF.Abs(Control.Value.y) <= 1)
+                Move(Control.Value);
+            if (jumpTimer <= 0)
+                if (jumpControl.Value)
+                    isJumping.Value = true;
+                else isJumping.Value = false;
+            Jump();
             Position.Value = transform.position;
         }
         else {
             Rig.velocity = Velocity.Value;
+            Jump();
         }
         
     }
@@ -59,6 +85,21 @@ public class PlayerControler : NetworkBehaviour
         Rig.velocity = new_velocity;
         if (IsServer) {
             Velocity.Value = new_velocity;
+        }
+    }
+    private float jumpTimer = -1;
+    [SerializeField]
+    private float jumpTime = 3;
+    private void Jump() {
+        
+        if (!isJumping.Value) jumpedAlready = false;
+        if (isJumping.Value && !jumpedAlready) {
+            jumpTimer = jumpTime;
+            gameObject.layer = LayerMask.NameToLayer("CollisionsJump");
+            jumpedAlready = true;
+        }
+        if (jumpTimer > 0) {
+            jumpTimer -= Time.deltaTime;
         }
     }
 

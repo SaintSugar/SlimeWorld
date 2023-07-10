@@ -5,14 +5,6 @@ using UnityEngine;
 public class PlayerCollider : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]
-    private CapsuleCollider2D Collider1;
-    [SerializeField]
-    private CapsuleCollider2D Collider2;
-    [SerializeField]
-    private CapsuleCollider2D Trigger1;
-    [SerializeField]
-    private CapsuleCollider2D Trigger2;
     void Start()
     {
         
@@ -21,17 +13,23 @@ public class PlayerCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<CapsuleCollider2D>()!=Collider1)
-        Collider1.enabled = false;
+    public float GetZLevel() {
+        return zLevel;
     }
-    private void OnTriggerExit(Collider other)
+    [SerializeField]
+    float zLevel = 0;
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<CapsuleCollider2D>()!=Collider1)
-        Collider1.enabled = true;
+        Debug.Log("New");
+        if (other.tag == "Terrain")
+            zLevel++;
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {   
+        Debug.Log("Old");
+        if (other.tag == "Terrain")
+            zLevel--;
     }
 
 }
