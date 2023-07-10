@@ -18,7 +18,10 @@ public class Follow : MonoBehaviour {
         Target = t;
     }
     void LateUpdate () {
-        if (!Target) return;
+        if (!Target) {
+            Destroy(gameObject);
+            return;
+        }
         float xp, yp, xc, yc;
         xp = Target.transform.position.x;
         yp = Target.transform.position.y;

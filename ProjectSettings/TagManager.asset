@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - TriggerA
+  - TriggerB
   layers:
   - Default
   - TransparentFX
@@ -11,9 +13,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Top grass
-  - Grass
-  - 
+  - CollisionsA
+  - CollisionsB
+  - TriggerAB
   - 
   - 
   - 
@@ -40,10 +42,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Player
-    uniqueID: 3137619437
-    locked: 0
-  - name: MainPlayer
-    uniqueID: 2365593851
     locked: 0

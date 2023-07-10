@@ -5,33 +5,25 @@ using UnityEngine;
 public class PlayerCollider : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]
-    private CapsuleCollider2D Collider1;
-    [SerializeField]
-    private CapsuleCollider2D Collider2;
-    [SerializeField]
-    private CapsuleCollider2D Trigger1;
-    [SerializeField]
-    private CapsuleCollider2D Trigger2;
     void Start()
     {
         
     }
+    private new string tag = null;
 
     // Update is called once per frame
-    void Update()
+    public string GetLayerTag()
     {
-
+        return tag;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.GetComponent<CapsuleCollider2D>()!=Collider1)
-        Collider1.enabled = false;
+        //Debug.Log("NEW COLLISION!");
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<CapsuleCollider2D>()!=Collider1)
-        Collider1.enabled = true;
+        tag = other.tag;
+        //Debug.Log(tag);
     }
 
 }
