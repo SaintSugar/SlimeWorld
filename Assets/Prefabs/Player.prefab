@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2001819563648774368}
   - component: {fileID: -2925665508494947605}
   - component: {fileID: 6675463127996233869}
+  - component: {fileID: 409876578253926157}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -125,6 +126,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 10
   Acceleration: 1
+  isJumping:
+    m_InternalValue: 0
+  jumpTime: 0.5
 --- !u!114 &284072507542365661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,8 +171,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00029016324, y: 0.065430366}
-  m_Size: {x: 1.2066132, y: 0.093301125}
+  m_Offset: {x: -0.011492365, y: 0.065430366}
+  m_Size: {x: 1.8474021, y: 0.093301125}
   m_Direction: 1
 --- !u!114 &6675463127996233869
 MonoBehaviour:
@@ -183,3 +187,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zLevel: 0
+--- !u!114 &409876578253926157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284072507542365662}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000621e3ccbe74347874d8fadb073664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1

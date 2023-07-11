@@ -157,11 +157,38 @@ TextureImporter:
       - - {x: -3, y: 0}
         - {x: 3, y: 0}
         - {x: 3, y: 1}
+        - {x: 2, y: 3}
+        - {x: -2, y: 3}
         - {x: -3, y: 1}
       tessellationDetail: 0.68
       bones: []
       spriteID: 9b357681ebfdf6f4e99e698ce93f0807
       internalID: 1988265363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colliders_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -5, y: -5}
+        - {x: 5, y: -5}
+        - {x: 5, y: 1}
+        - {x: -5, y: 1}
+      tessellationDetail: 1
+      bones: []
+      spriteID: b9a220c0cb8353048aabd5bbc335d870
+      internalID: 1536472159
       vertices: []
       indices: 
       edges: []
@@ -179,6 +206,7 @@ TextureImporter:
     nameFileIdTable:
       Colliders_0: -1676759380
       Colliders_1: 1988265363
+      Colliders_2: 1536472159
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

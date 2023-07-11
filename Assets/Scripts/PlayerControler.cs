@@ -21,12 +21,17 @@ public class PlayerControler : NetworkBehaviour
         ForcePull[0] = 0;
         ForcePull[1] = 0;
         Rig = GetComponent<Rigidbody2D>();
+        if (IsServer) {
+            //isJumping.Value = true;
+        }
+        jumpTimer = 0.1f;
+        gameObject.layer = LayerMask.NameToLayer("PlayerCollisionJump");
     }
     private Rigidbody2D Rig;
     private NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>(writePerm:NetworkVariableWritePermission.Server);
     private NetworkVariable<Vector3> Velocity = new NetworkVariable<Vector3>(writePerm:NetworkVariableWritePermission.Server);
     private NetworkVariable<Vector2> Control = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
-    private NetworkVariable<bool> isJumping = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Server, readPerm:NetworkVariableReadPermission.Everyone);
+    public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Server, readPerm:NetworkVariableReadPermission.Everyone);
     private NetworkVariable<bool> jumpControl = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
     public override void OnNetworkSpawn()
     {
@@ -36,6 +41,7 @@ public class PlayerControler : NetworkBehaviour
             if ((transform.position - Position.Value).magnitude > 3) {
                 transform.position = Position.Value;
             }
+                
         };
         isJumping.OnValueChanged += (bool a, bool b) =>
         {    
@@ -45,14 +51,17 @@ public class PlayerControler : NetworkBehaviour
 
     void FixedUpdate()
     {   
+        
+        float zLevel = GetComponent<PlayerCollider>().GetZLevel();
+        transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
+        
+        
         if (!(jumpTimer > 0)) {
-                float zLevel = GetComponent<PlayerCollider>().GetZLevel();
-                transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
-                if (Math.Round(transform.position.z)%2 == 0)
-                    gameObject.layer = LayerMask.NameToLayer("PlayerCollision0");
-                else
-                    gameObject.layer = LayerMask.NameToLayer("PlayerCollision1");
-            }
+            if (Math.Round(transform.position.z)%2 == 0)
+                gameObject.layer = LayerMask.NameToLayer("PlayerCollision0");
+            else
+                gameObject.layer = LayerMask.NameToLayer("PlayerCollision1");
+        }
         if (IsOwner) {
             Vector2 control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             Control.Value = control;
@@ -72,8 +81,11 @@ public class PlayerControler : NetworkBehaviour
             Position.Value = transform.position;
         }
         else {
-            Rig.velocity = Velocity.Value;
+            if (!IsOwner)
+                Rig.velocity = Velocity.Value;
             Jump();
+            if (transform.position.z != Position.Value.z)
+                transform.position = Position.Value;
         }
         
     }
@@ -89,17 +101,23 @@ public class PlayerControler : NetworkBehaviour
     }
     private float jumpTimer = -1;
     [SerializeField]
-    private float jumpTime = 3;
+    private float jumpTime = 0.5f;
     private void Jump() {
         
         if (!isJumping.Value) jumpedAlready = false;
         if (isJumping.Value && !jumpedAlready) {
             jumpTimer = jumpTime;
-            gameObject.layer = LayerMask.NameToLayer("CollisionsJump");
+            gameObject.layer = LayerMask.NameToLayer("PlayerCollisionJump");
             jumpedAlready = true;
         }
         if (jumpTimer > 0) {
             jumpTimer -= Time.deltaTime;
+            
+            if (!(jumpTimer > 0)) {
+                
+            }
+            
+            
         }
     }
 
