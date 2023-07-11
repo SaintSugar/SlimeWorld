@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 924665c451c92e2428aec90f2841d2fe
+guid: 557712033a689fe478e1bf30e1c2f264
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,12 +44,12 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -117,148 +117,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Plants_1
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 10
-        width: 10
-        height: 10
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b14f5bb277b8fe4e935817cf29cc66d
-      internalID: 794723823
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plants_2
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 10
-        width: 10
-        height: 10
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 46f942085a8769041b923bb203ac9ee9
-      internalID: 617515884
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plants_3
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 10
-        width: 10
-        height: 10
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 75e907ebccde78441a9a0942fad7741c
-      internalID: -1752813635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plants_5
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 0
-        width: 10
-        height: 10
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b890ee964495c94cbe61fe44111ca4b
-      internalID: 143291802
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plants_6
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 0
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.54913557, y: 0.100857}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99c3f633952fd0845a23be5eda9547e5
-      internalID: -941701608
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plants_7
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 0
-        width: 10
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0.3025709}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ac029375c12c104ab6f153fe8caaa2e
-      internalID: -1358224700
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plants_0
+      name: Colliders_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 10
-        height: 20
-      alignment: 9
-      pivot: {x: 0.51, y: 0.25100002}
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
-      tessellationDetail: 0
+      physicsShape:
+      - - {x: -5, y: 5}
+        - {x: -5, y: -5}
+        - {x: 5, y: -5}
+        - {x: 5, y: 5}
+      tessellationDetail: 0.24
       bones: []
-      spriteID: 1d3e63209c41a9346995d3f3480b2725
-      internalID: -880285266
+      spriteID: 34e244c00d6829343b82baa2432e9a55
+      internalID: -1676759380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colliders_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -3, y: 0}
+        - {x: 3, y: 0}
+        - {x: 3, y: 1}
+        - {x: 2, y: 3}
+        - {x: -2, y: 3}
+        - {x: -3, y: 1}
+      tessellationDetail: 0.68
+      bones: []
+      spriteID: 9b357681ebfdf6f4e99e698ce93f0807
+      internalID: 1988265363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Colliders_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -5, y: -5}
+        - {x: 5, y: -5}
+        - {x: 5, y: 1}
+        - {x: -5, y: 1}
+      tessellationDetail: 1
+      bones: []
+      spriteID: b9a220c0cb8353048aabd5bbc335d870
+      internalID: 1536472159
       vertices: []
       indices: 
       edges: []
@@ -274,14 +204,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Plants_1: 794723823
-      Plants_3: -1752813635
-      Plants_7: -1358224700
-      Plants_4: 1593769568
-      Plants_0: -880285266
-      Plants_2: 617515884
-      Plants_6: -941701608
-      Plants_5: 143291802
+      Colliders_0: -1676759380
+      Colliders_1: 1988265363
+      Colliders_2: 1536472159
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
