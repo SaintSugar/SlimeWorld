@@ -17,18 +17,18 @@ SpriteAtlas:
       textureCompression: 0
       filterMode: 0
       generateMipMaps: 1
-      readable: 0
+      readable: 1
       crunchedCompression: 0
       sRGB: 1
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 2048
+      m_MaxTextureSize: 1024
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 2
-      m_CompressionQuality: 50
-      m_CrunchedCompression: 1
+      m_CompressionQuality: 0
+      m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
       m_Overridden: 0
       m_AndroidETC2FallbackOverride: 0
@@ -46,6 +46,7 @@ SpriteAtlas:
     packables:
     - {fileID: 2800000, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
     - {fileID: 2800000, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
+    - {fileID: 2800000, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -65,6 +66,9 @@ SpriteAtlas:
   - {fileID: 222779439, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
   - {fileID: -1361499652, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
   - {fileID: 1712468521, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
+  - {fileID: 1536472159, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
+  - {fileID: 1988265363, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
+  - {fileID: -1676759380, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
   - {fileID: 143291802, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
   - {fileID: -941701608, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
   - {fileID: -1358224700, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
@@ -87,6 +91,9 @@ SpriteAtlas:
   - BlocksGrassRoad_12
   - BlocksGrassRoad_6
   - BlocksGrassRoad_7
+  - Colliders_2
+  - Colliders_1
+  - Colliders_0
   - Plants_5
   - Plants_6
   - Plants_7

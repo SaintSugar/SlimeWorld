@@ -27,7 +27,7 @@ public class PlayerCollider : MonoBehaviour
         if (triggerAmount % 4 == 0) {
             zLevel = triggerAmount/4;
         }
-        Debug.Log("New T: " + triggerAmount+" Z: " + zLevel);
+        //Debug.Log("New T: " + triggerAmount+" Z: " + zLevel);
     }
     private void OnTriggerExit2D(Collider2D other)
     {   
@@ -37,7 +37,7 @@ public class PlayerCollider : MonoBehaviour
         if (triggerAmount % 4 == 0) {
             zLevel = triggerAmount/4;        
         }
-        Debug.Log("Old T: " + triggerAmount+" Z: " + zLevel);
+        //Debug.Log("Old T: " + triggerAmount+" Z: " + zLevel);
     }
 
 }
