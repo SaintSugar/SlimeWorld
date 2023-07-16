@@ -19,17 +19,25 @@ public class PlayerCollider : MonoBehaviour
     }
     [SerializeField]
     float zLevel = 0;
+    float triggerAmount = 0;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("New");
         if (other.tag == "Terrain")
-            zLevel++;
+            triggerAmount++;
+        if (triggerAmount % 4 == 0) {
+            zLevel = triggerAmount/4;
+        }
+        Debug.Log("New T: " + triggerAmount+" Z: " + zLevel);
     }
     private void OnTriggerExit2D(Collider2D other)
     {   
-        Debug.Log("Old");
+        
         if (other.tag == "Terrain")
-            zLevel--;
+            triggerAmount--;
+        if (triggerAmount % 4 == 0) {
+            zLevel = triggerAmount/4;        
+        }
+        Debug.Log("Old T: " + triggerAmount+" Z: " + zLevel);
     }
 
 }

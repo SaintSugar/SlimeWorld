@@ -4,9 +4,23 @@ using UnityEngine;
 namespace HelloWorld
 {
     public class HelloWorldManager : MonoBehaviour
-    {
+    {   
+        [SerializeField]
+        private bool isDedicatedServer = false;
+        [SerializeField]
+        private bool isClient = false;
+        [SerializeField]
+        private bool enableGUI = true;
+        void Start() {
+            if (isDedicatedServer)
+                NetworkManager.Singleton.StartServer();
+            if (isClient)
+                NetworkManager.Singleton.StartClient();
+            
+        }
         void OnGUI()
         {
+            if (!enableGUI) return;
             GUILayout.BeginArea(new Rect(10, 10, 300, 300));
             if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
             {
