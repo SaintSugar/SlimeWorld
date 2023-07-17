@@ -23,7 +23,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 1024
+      m_MaxTextureSize: 8192
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 2
@@ -47,11 +47,17 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
     - {fileID: 2800000, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
     - {fileID: 2800000, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
+    - {fileID: 2800000, guid: bb24ee700b31a4b498f1791a19cb7c12, type: 3}
+    - {fileID: 2800000, guid: 34ab2944970c41146bfae5396885990d, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 1626227366, guid: bb24ee700b31a4b498f1791a19cb7c12, type: 3}
+  - {fileID: -1277632855, guid: bb24ee700b31a4b498f1791a19cb7c12, type: 3}
+  - {fileID: 1479520845, guid: bb24ee700b31a4b498f1791a19cb7c12, type: 3}
+  - {fileID: -270924176, guid: bb24ee700b31a4b498f1791a19cb7c12, type: 3}
   - {fileID: -1926898264, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
   - {fileID: 2029141775, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
   - {fileID: 1033424509, guid: 6e7777f20a10bf6438ffcb5cec55b485, type: 3}
@@ -69,6 +75,10 @@ SpriteAtlas:
   - {fileID: 1536472159, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
   - {fileID: 1988265363, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
   - {fileID: -1676759380, guid: 557712033a689fe478e1bf30e1c2f264, type: 3}
+  - {fileID: 447209524, guid: 34ab2944970c41146bfae5396885990d, type: 3}
+  - {fileID: 962426490, guid: 34ab2944970c41146bfae5396885990d, type: 3}
+  - {fileID: 2043568766, guid: 34ab2944970c41146bfae5396885990d, type: 3}
+  - {fileID: 1043724479, guid: 34ab2944970c41146bfae5396885990d, type: 3}
   - {fileID: 143291802, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
   - {fileID: -941701608, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
   - {fileID: -1358224700, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
@@ -77,6 +87,10 @@ SpriteAtlas:
   - {fileID: 617515884, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
   - {fileID: -1752813635, guid: 924665c451c92e2428aec90f2841d2fe, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Slime_0
+  - Slime_1
+  - Slime_2
+  - Slime_3
   - BlocksGrassRoad_4
   - BlocksGrassRoad_5
   - BlocksGrassRoad_2
@@ -94,6 +108,10 @@ SpriteAtlas:
   - Colliders_2
   - Colliders_1
   - Colliders_0
+  - SlimeJump_0
+  - SlimeJump_1
+  - SlimeJump_2
+  - SlimeJump_3
   - Plants_5
   - Plants_6
   - Plants_7

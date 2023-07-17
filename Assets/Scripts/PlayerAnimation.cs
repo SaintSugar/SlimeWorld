@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {   
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    
-    // Update is called once per frame
 
     public AnimationClip StateRun;
     public AnimationClip StateRunSide;
@@ -19,35 +12,71 @@ public class PlayerAnimation : MonoBehaviour
     public AnimationClip StateIdle;
     public AnimationClip StateIdleSide;
     public AnimationClip StateIdleBack;
+    public AnimationClip StateJump;
     
+    [SerializeField]
+    private float speed;
+    private SpriteRenderer spriteRenderer;
+    private new Rigidbody2D rigidbody2D;
+    private Animator animator;
+    [SerializeField]
+    private bool flip;
+    [SerializeField]
+    private bool isPlayer;
+    [SerializeField]
+    private float maximumSpeed;
+    private PlayerControler playerControler;
+    void Start() {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        if (isPlayer)
+            playerControler = GetComponent<PlayerControler>();
+            maximumSpeed = playerControler.GetMaximumSpeed();
 
-    public float speed;
-    public bool Gravity;
+        
+
+    }
+    bool isJumping = false;
     void LateUpdate()
     {
-        Animator PlayerAnimator = GetComponent<Animator>();
-        Vector2 CurrentSpeed = GetComponent<Rigidbody2D>().velocity;
+        Vector2 CurrentSpeed = rigidbody2D.velocity;
+        if (playerControler.IsJumping() && !isJumping) {
+            animator.speed = 1f;
+            animator.Play(StateJump.name);
+            isJumping = true;
+            return;
+        }
+        else if (!playerControler.IsJumping()) {
+            isJumping = false;
+        }
+        else if (isJumping) {
+            return;
+        }
         if (CurrentSpeed.magnitude > speed){
-            PlayerAnimator.SetBool("Idle", false);
-            if (Mathf.Abs(CurrentSpeed.x) > Mathf.Abs(CurrentSpeed.y) || Gravity) {
-                PlayerAnimator.Play(StateRunSide.name);
+            //animator.SetBool("Idle", false);
+            animator.speed = CurrentSpeed.magnitude/maximumSpeed;
+            if (Mathf.Abs(CurrentSpeed.x) > Mathf.Abs(CurrentSpeed.y)) {
+                animator.Play(StateRunSide.name);
                 if (CurrentSpeed.x < 0)
-                    GetComponent<SpriteRenderer>().flipX = true;
+                    spriteRenderer.flipX = true&&flip;
                 else if (CurrentSpeed.x > 0)
-                    GetComponent<SpriteRenderer>().flipX = false;
+                    spriteRenderer.flipX = false&&flip;
             }
-            else if (Mathf.Abs(CurrentSpeed.x) < Mathf.Abs(CurrentSpeed.y) && !Gravity) {
+            else if (Mathf.Abs(CurrentSpeed.x) < Mathf.Abs(CurrentSpeed.y)) {
                 if (CurrentSpeed.y < 0) {
-                    PlayerAnimator.Play(StateRun.name);
-                    GetComponent<SpriteRenderer>().flipX = false;
+                    animator.Play(StateRun.name);
                 }
                 else if (CurrentSpeed.y > 0) {
-                    PlayerAnimator.Play(StateRunBack.name);
-                    GetComponent<SpriteRenderer>().flipX = true;
+                    animator.Play(StateRunBack.name);
                 }
             }
         }
-        else
-            PlayerAnimator.SetBool("Idle", true);
+        else {
+            animator.speed = 1f;
+            animator.Play(StateIdle.name);
+        }
+            //
+            //animator.SetBool("Idle", true);
     }
 }

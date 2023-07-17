@@ -7,7 +7,7 @@ public class Follow : MonoBehaviour {
     [SerializeField]
     private Transform Target;
     [SerializeField]
-    private float Radius;
+    public float Radius;
     [SerializeField]
     private float Elasticity;
     [SerializeField]

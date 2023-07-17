@@ -14,9 +14,10 @@ public class PlayerControler : NetworkBehaviour
 
     private float[] ForcePull;
     private bool jumpedAlready = false;
- 
+    SpriteRenderer emotion;
     void Start()
     {   
+        emotion = transform.Find("SlimeEmotion").GetComponent<SpriteRenderer>();
         ForcePull = new float[2];
         ForcePull[0] = 0;
         ForcePull[1] = 0;
@@ -33,6 +34,8 @@ public class PlayerControler : NetworkBehaviour
     private NetworkVariable<Vector2> Control = new NetworkVariable<Vector2>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
     public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Server, readPerm:NetworkVariableReadPermission.Everyone);
     private NetworkVariable<bool> jumpControl = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Owner);
+
+    private NetworkVariable<bool> emotionControl = new NetworkVariable<bool>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Everyone);
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -51,13 +54,16 @@ public class PlayerControler : NetworkBehaviour
 
     void FixedUpdate()
     {   
-        
+        if (IsOwner)
+            emotionControl.Value = Input.GetAxis("Fire2")!=0;
+        emotion.enabled = emotionControl.Value;
         float zLevel = GetComponent<PlayerCollider>().GetZLevel();
-        transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
+        if (!(jumpTimer <= 0.75-0.125 && jumpTimer >= 0.75-0.125-0.5))
+            transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
         
         
-        if (!(jumpTimer > 0)) {
-            if (Math.Round(transform.position.z)%2 == 0)
+        if (!(jumpTimer <= 0.75-0.125 && jumpTimer >= 0.75-0.125-0.5)) {
+            if (Math.Round(zLevel)%2 == 0)
                 gameObject.layer = LayerMask.NameToLayer("PlayerCollision0");
             else
                 gameObject.layer = LayerMask.NameToLayer("PlayerCollision1");
@@ -101,20 +107,23 @@ public class PlayerControler : NetworkBehaviour
     }
     private float jumpTimer = -1;
     [SerializeField]
-    private float jumpTime = 0.5f;
+    private float jumpTime = 0.75f;
     private void Jump() {
         
         if (!isJumping.Value) jumpedAlready = false;
         if (isJumping.Value && !jumpedAlready) {
             jumpTimer = jumpTime;
-            gameObject.layer = LayerMask.NameToLayer("PlayerCollisionJump");
             jumpedAlready = true;
         }
         if (jumpTimer > 0) {
             jumpTimer -= Time.deltaTime;
             
-            if (!(jumpTimer > 0)) {
-                
+            if (jumpTimer <= 0.75-0.125 && jumpTimer >= 0.75-0.125-0.5) {
+                gameObject.layer = LayerMask.NameToLayer("PlayerCollisionJump");
+                //transform.position = new Vector3(transform.position.x, transform.position.y, 100);
+            }
+            else if (jumpTimer < 0.75-0.125-0.5) {
+
             }
             
             
@@ -138,5 +147,11 @@ public class PlayerControler : NetworkBehaviour
                 
                 
         return new_velocity;
+    }
+    public float GetMaximumSpeed() {
+        return Speed;
+    }
+    public bool IsJumping() {
+        return (jumpTimer > 0);
     }
 }
