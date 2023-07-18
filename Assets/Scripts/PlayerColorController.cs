@@ -5,20 +5,15 @@ using Unity.Netcode;
 
 public class PlayerColorController : NetworkBehaviour
 {
-    // Start is called before the first frame update
     private NetworkVariable<UnityEngine.Color> Colour = new NetworkVariable<UnityEngine.Color>(writePerm:NetworkVariableWritePermission.Owner, readPerm:NetworkVariableReadPermission.Everyone);
     SpriteRenderer m_SpriteRenderer;
-    //The Color to be assigned to the Renderer’s Material
     Color m_NewColor;
 
-    //These are the values that the Color Sliders return
     float m_Red = 1, m_Blue = 1, m_Green = 1;
 
     void Start()
     {
-        //Fetch the SpriteRenderer from the GameObject
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        //Set the GameObject's Color quickly to a set Color (blue)
+        m_SpriteRenderer = Helper.FindChildWithTag(gameObject, "Entity").GetComponent<SpriteRenderer>();
         m_SpriteRenderer.color = Color.white;
     }
     void Update()

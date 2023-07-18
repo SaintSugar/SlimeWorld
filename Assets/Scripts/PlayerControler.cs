@@ -58,7 +58,8 @@ public class PlayerControler : NetworkBehaviour
             emotionControl.Value = Input.GetAxis("Fire2")!=0;
         emotion.enabled = emotionControl.Value;
         float zLevel = GetComponent<PlayerCollider>().GetZLevel();
-        if (!(jumpTimer <= 0.75-0.125 && jumpTimer >= 0.75-0.125-0.5))
+        if (!(jumpTimer <= 0.75-0.125 && jumpTimer >= 0.75-0.125-0.5)) 
+        {}
             transform.position = new Vector3(transform.position.x, transform.position.y, zLevel);
         
         
@@ -114,16 +115,25 @@ public class PlayerControler : NetworkBehaviour
         if (isJumping.Value && !jumpedAlready) {
             jumpTimer = jumpTime;
             jumpedAlready = true;
+            //Helper.FindChildWithTag(gameObject, "Entity").transform.position = new Vector3(Helper.FindChildWithTag(gameObject, "Entity").transform.position.x, Helper.FindChildWithTag(gameObject, "Entity").transform.position.y, transform.position.z + 1);
         }
         if (jumpTimer > 0) {
+            float H = 6;
+            float Vo = 4*H/jumpTime;
+            float G = 2 * Vo /jumpTime;
+            float V = Vo - G * (jumpTime - jumpTimer);
+
+            Helper.FindChildWithTag(gameObject, "Entity").transform.position += new Vector3(0, V, 0) * Time.deltaTime;
             jumpTimer -= Time.deltaTime;
             
             if (jumpTimer <= 0.75-0.125 && jumpTimer >= 0.75-0.125-0.5) {
                 gameObject.layer = LayerMask.NameToLayer("PlayerCollisionJump");
-                //transform.position = new Vector3(transform.position.x, transform.position.y, 100);
             }
             else if (jumpTimer < 0.75-0.125-0.5) {
-
+                
+            }
+            if (jumpTimer <= 0) {
+                Helper.FindChildWithTag(gameObject, "Entity").transform.position = transform.position;
             }
             
             

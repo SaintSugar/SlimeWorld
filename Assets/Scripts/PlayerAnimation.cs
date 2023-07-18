@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {   
-
-    public AnimationClip StateRun;
-    public AnimationClip StateRunSide;
-    public AnimationClip StateRunBack;
-
-    public AnimationClip StateIdle;
-    public AnimationClip StateIdleSide;
-    public AnimationClip StateIdleBack;
-    public AnimationClip StateJump;
-    
     [SerializeField]
     private float speed;
     private SpriteRenderer spriteRenderer;
@@ -21,19 +11,17 @@ public class PlayerAnimation : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private bool flip;
-    [SerializeField]
-    private bool isPlayer;
-    [SerializeField]
     private float maximumSpeed;
     private PlayerControler playerControler;
+    private EntityProperties.AnimationStates animationStates;
     void Start() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerControler = GetComponent<PlayerControler>();
         rigidbody2D = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        if (isPlayer)
-            playerControler = GetComponent<PlayerControler>();
-            maximumSpeed = playerControler.GetMaximumSpeed();
-
+        GameObject entity = Helper.FindChildWithTag(gameObject, "Entity");
+        spriteRenderer = entity.GetComponent<SpriteRenderer>();
+        animator = entity.GetComponent<Animator>();
+        maximumSpeed = entity.GetComponent<EntityProperties>().abilities.maximumSpeed;
+        animationStates = entity.GetComponent<EntityProperties>().animationStates;
         
 
     }
@@ -43,7 +31,7 @@ public class PlayerAnimation : MonoBehaviour
         Vector2 CurrentSpeed = rigidbody2D.velocity;
         if (playerControler.IsJumping() && !isJumping) {
             animator.speed = 1f;
-            animator.Play(StateJump.name);
+            animator.Play(animationStates.StateJump.name);
             isJumping = true;
             return;
         }
@@ -54,10 +42,9 @@ public class PlayerAnimation : MonoBehaviour
             return;
         }
         if (CurrentSpeed.magnitude > speed){
-            //animator.SetBool("Idle", false);
             animator.speed = CurrentSpeed.magnitude/maximumSpeed;
             if (Mathf.Abs(CurrentSpeed.x) > Mathf.Abs(CurrentSpeed.y)) {
-                animator.Play(StateRunSide.name);
+                animator.Play(animationStates.StateRunSide.name);
                 if (CurrentSpeed.x < 0)
                     spriteRenderer.flipX = true&&flip;
                 else if (CurrentSpeed.x > 0)
@@ -65,18 +52,16 @@ public class PlayerAnimation : MonoBehaviour
             }
             else if (Mathf.Abs(CurrentSpeed.x) < Mathf.Abs(CurrentSpeed.y)) {
                 if (CurrentSpeed.y < 0) {
-                    animator.Play(StateRun.name);
+                    animator.Play(animationStates.StateRunForward.name);
                 }
                 else if (CurrentSpeed.y > 0) {
-                    animator.Play(StateRunBack.name);
+                    animator.Play(animationStates.StateRunBack.name);
                 }
             }
         }
         else {
             animator.speed = 1f;
-            animator.Play(StateIdle.name);
+            animator.Play(animationStates.StateIdle.name);
         }
-            //
-            //animator.SetBool("Idle", true);
     }
 }
